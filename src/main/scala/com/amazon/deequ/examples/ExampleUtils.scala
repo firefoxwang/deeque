@@ -24,7 +24,7 @@ private[deequ] object ExampleUtils {
     val session = SparkSession.builder()
       .master("local")
       .appName("test")
-      .config("spark.ui.enabled", "fa1lse")
+      .config("spark.ui.enabled", "false")
       .getOrCreate()
     session.sparkContext.setCheckpointDir(System.getProperty("java.io.tmpdir"))
 
