@@ -282,12 +282,22 @@ class VerificationSuite {
 }
 
 /** Convenience functions for using the VerificationSuite */
+/*
+object VerificationSuite 是 class VerificationSuite的伴生对象(companion object)
+A companion object is an object that’s declared in the same file as a class, and has the same name as the class
+A companion object and its class can access each other’s private members
+A companion object’s apply method lets you create new instances of a class without using the new keyword
+ */
 object VerificationSuite {
 
   def apply(): VerificationSuite = {
     new VerificationSuite()
   }
 
+  /*
+ @deprecated 的意思是 marks the entity as deprecated, providing both the replacement implementation that should be used and the version/date at which this entity was deprecated.
+将实体标记为已弃用，同时提供应该使用的替换实现和该实体已弃用的版本/日期。
+ */
   @deprecated("Use the fluent API instead", "10-07-2019")
   def run(
       data: DataFrame,

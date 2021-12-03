@@ -29,10 +29,10 @@ import scala.util.{Failure, Success}
 /**
   * A state (sufficient statistic) computed from data, from which we can compute a metric.
   * Must be combinable with other states of the same type
-  * (= algebraic properties of a commutative semi-group)
+  * (= algebraic properties of a commutative semi-group) 交换半群的代数性质
   */
 trait State[S <: State[S]] {
-
+// 疑问，State的type为S <: State[S] 的目的不知道是什么， <:还有一个上部类型边界UPPER TYPE BOUNDS
   // Unfortunately this is required due to type checking issues
   private[analyzers] def sumUntyped(other: State[_]): S = {
     sum(other.asInstanceOf[S])
@@ -54,6 +54,10 @@ trait DoubleValuedState[S <: DoubleValuedState[S]] extends State[S] {
 
 /** Common trait for all analyzers which generates metrics from states computed on data frames */
 trait Analyzer[S <: State[_], +M <: Metric[_]] {
+  /*
+  +M的意思表示协变 Covariance  ，协变是形变的一种（VARIANCES），详情看https://docs.scala-lang.org/tour/variances.html
+  这里的协变表示类型可以为M的父类或者，同为M父类的子类
+   */
 
   /**
     * Compute the state (sufficient statistics) from the data

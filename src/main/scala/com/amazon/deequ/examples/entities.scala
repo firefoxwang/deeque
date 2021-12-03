@@ -17,6 +17,10 @@
 package com.amazon.deequ.examples
 
 private[deequ] case class Item(
+                              /*
+Case classes are good for modeling immutable data（模块化不可改变的数据）.
+In the next step of the tour, we’ll see how they are useful in pattern matching.
+                               */
     id: Long,
     productName: String,
     description: String,
