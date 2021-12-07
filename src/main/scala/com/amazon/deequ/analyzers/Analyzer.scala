@@ -55,16 +55,26 @@ trait DoubleValuedState[S <: DoubleValuedState[S]] extends State[S] {
 /** Common trait for all analyzers which generates metrics from states computed on data frames */
 trait Analyzer[S <: State[_], +M <: Metric[_]] {
   /*
+  Traits are used to share interfaces and fields between classes. They are similar to Java 8’s interfaces.
+  Classes and objects can extend traits, but traits cannot be instantiated (实例化) and therefore have no parameters.
   +M的意思表示协变 Covariance  ，协变是形变的一种（VARIANCES），详情看https://docs.scala-lang.org/tour/variances.html
   这里的协变表示类型可以为M的父类或者，同为M父类的子类
+  <:表示上部类型边界UPPER TYPE BOUNDS
    */
 
   /**
-    * Compute the state (sufficient statistics) from the data
+    * Compute the state (sufficient statistics 充分统计量) from the data
     * @param data data frame
     * @return
     */
   def computeStateFrom(data: DataFrame): Option[S]
+  /*
+  Options can be thought of as a container of 0 or 1 items
+  Options可以被看做为有一个item或者0个item的的容器，更多解释见
+  https://docs.scala-lang.org/overviews/scala-book/no-null-values.html#using-optionsomenone
+  Option的使用场景，在于函数返回空值时的处理，使用None而不是null(不像是python这种动态语言，定义方法的时候，不需要确定返回的类型)
+
+   */
 
   /**
     * Compute the metric from the state (sufficient statistics)
@@ -74,7 +84,7 @@ trait Analyzer[S <: State[_], +M <: Metric[_]] {
   def computeMetricFrom(state: Option[S]): M
 
   /**
-    * A set of assertions that must hold on the schema of the data frame
+    * A set of assertions（断言） that must hold on the schema of the data frame
     * @return
     */
   def preconditions: Seq[StructType => Unit] = {
@@ -116,6 +126,9 @@ trait Analyzer[S <: State[_], +M <: Metric[_]] {
 
     // Try to load the state
     val loadedState: Option[S] = aggregateWith.flatMap { _.load[S](this) }
+    /*
+    this代表的是trait Analyzer
+     */
 
     // Potentially merge existing and loaded state
     val stateToComputeMetricFrom: Option[S] = Analyzers.merge(state, loadedState)

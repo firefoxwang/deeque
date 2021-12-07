@@ -13,6 +13,10 @@
  * permissions and limitations under the License.
  *
  */
+/*
+Scaladoc 是一个文档系统，它存在于 Scala 源代码的注释中，并且与编写它的代码结构相关。
+Scaladoc comments go before the items they pertain to in a special comment block that starts with a /** and ends with a */, like this:
+ */
 
 package com.amazon.deequ.examples
 
