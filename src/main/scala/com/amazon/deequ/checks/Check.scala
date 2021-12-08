@@ -62,6 +62,11 @@ case class Check(
   level: CheckLevel.Value,
   description: String,
   private[deequ] val constraints: Seq[Constraint] = Seq.empty) {
+  /*
+  这里面用了private val constraints，与单独的constraint不同，前者是一个私有的变量，可以在类和实例里访问，
+  后者是构造函数参数（constructor parameter），只能在类中，不能在实例中访问。
+  https://stackoverflow.com/questions/14694712/do-scala-constructor-parameters-default-to-private-val
+   */
 
 
   /**

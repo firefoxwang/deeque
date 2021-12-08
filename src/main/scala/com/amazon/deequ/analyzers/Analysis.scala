@@ -27,7 +27,10 @@ import org.apache.spark.storage.StorageLevel
   * @param analyzers
   */
 case class Analysis(analyzers: Seq[Analyzer[_, Metric[_]]] = Seq.empty) {
-
+/*
+Case classes are good for modeling immutable data.
+case class擅长于不可变数据建模
+ */
   def addAnalyzer(analyzer: Analyzer[_, Metric[_]]): Analysis = {
     Analysis(analyzers :+ analyzer)
   }

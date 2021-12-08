@@ -132,6 +132,14 @@ trait Analyzer[S <: State[_], +M <: Metric[_]] {
 
     // Potentially merge existing and loaded state
     val stateToComputeMetricFrom: Option[S] = Analyzers.merge(state, loadedState)
+    /*
+    这里的Analyzers是伴生对象，
+    Yes. Traits and classes can have companion objects (an object with the same name as the class/trait).
+    Companion objects have a few uses：
+      Factory methods
+      An alternative to Java static methods (which Scala syntax doesn’t support)
+      A way to manage the import of functions and implicits
+     */
 
     // Persist the state if it is not empty and a persister was provided
     stateToComputeMetricFrom
