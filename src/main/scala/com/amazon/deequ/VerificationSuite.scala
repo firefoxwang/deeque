@@ -302,7 +302,8 @@ object VerificationSuite {
   def run(
       data: DataFrame,
       checks: Seq[Check],
-      requiredAnalysis: Analysis = Analysis()) // Analysis案例类可以不填参数，但必须加括号，因为他的确有参数，只是有初始化的参数
+      requiredAnalysis: Analysis = Analysis())
+  // Analysis案例类可以不填参数，但必须加括号，因为他的确有参数，只是有初始化的参数
   /*
     这里的requiredAnalysis有一个默认参数值 DEFAULT PARAMETER VALUES
    */
@@ -311,10 +312,11 @@ object VerificationSuite {
     val analyzers = requiredAnalysis.analyzers ++ checks.flatMap{ _.requiredAnalyzers() }
     /*
     ++ 该方法用于连接两个集合，collection 1 ++ collection 2
-    构造函数的参数，可以直接在类中引用，case class和伴生对象一样，不需要用new实例化对象
+    Analysis的构造函数的参数analyzers，可以直接在类中引用
+    case class和伴生对象一样，不需要用new实例化对象
      */
     VerificationSuite().doVerificationRun(data, checks, analyzers)
-    // 实例化类运行
+    // 伴生对象中实例化类运行
   }
 
   def runOnAggregatedStates(

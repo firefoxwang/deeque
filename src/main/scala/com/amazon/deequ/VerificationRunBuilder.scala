@@ -28,6 +28,9 @@ import org.apache.spark.sql.{DataFrame, SparkSession}
 class VerificationRunBuilder(val data: DataFrame) {
 
   protected var requiredAnalyzers: Seq[Analyzer[_, Metric[_]]] = Seq.empty
+  /*
+  在 scala 中，对保护（Protected）成员的访问很严格，允许保护成员在定义了该成员的类的子类中被访问，同一个包的其他类访问不了
+   */
 
   protected var checks: Seq[Check] = Seq.empty
 
@@ -46,6 +49,11 @@ class VerificationRunBuilder(val data: DataFrame) {
   protected var stateLoader: Option[StateLoader] = None
 
   protected def this(verificationRunBuilder: VerificationRunBuilder) {
+    /*
+    在类中定义this方法，叫做auxiliary constructors（辅助类构造函数），一般情况下很少用到，还不如在类的形参中直接定义默认参数值
+    但是像这种默认参数特别多的情况，使用辅助类构造函数还是挺有用的，比较简洁
+    功能就是用来设定默认值
+     */
 
     this(verificationRunBuilder.data)
 
@@ -66,6 +74,7 @@ class VerificationRunBuilder(val data: DataFrame) {
 
     stateLoader = verificationRunBuilder.stateLoader
     statePersister = verificationRunBuilder.statePersister
+
   }
 
   /**
