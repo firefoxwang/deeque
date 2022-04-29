@@ -1067,7 +1067,7 @@ case class Check(
 object Check {
 
   /** A common assertion function checking if the value is 1 */
-  val IsOne: Double => Boolean = { _ == 1.0 }
+  val IsOne: Double => Boolean = { _ == 1.0 }  // 高阶函数简写 ，返回一个函数
 
   /**
     * Common assertion function checking if the value can be considered as normal (that no
