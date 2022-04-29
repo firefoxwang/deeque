@@ -24,11 +24,14 @@ import scala.util.matching.Regex
 
 object ConstraintStatus extends Enumeration {
   val Success, Failure = Value
+  /*
+  使用Value方法，创建并初始化枚举值
+   */
 }
 
 case class ConstraintResult(
     constraint: Constraint,
-    status: ConstraintStatus.Value,
+    status: ConstraintStatus.Value,  // 入参的枚举值只能是ConstraintStatus的
     message: Option[String] = None,
     metric: Option[Metric[_]] = None)
 
@@ -65,7 +68,7 @@ class ConstraintDecorator(protected val _inner: Constraint) extends Constraint {
   */
 class NamedConstraint(private[deequ] val constraint: Constraint, name: String)
     extends ConstraintDecorator(constraint) {
-  override def toString(): String = name
+  override def toString: String = name
 }
 
 /**
