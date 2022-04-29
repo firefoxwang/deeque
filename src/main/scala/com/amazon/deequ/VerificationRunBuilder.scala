@@ -25,6 +25,14 @@ import com.amazon.deequ.repository._
 import org.apache.spark.sql.{DataFrame, SparkSession}
 
 /** A class to build a VerificationRun using a fluent API */
+/*
+fluent programming style, also known as method chaining,就是链式方法调用
+To support this style of programming:
+1.If your class can be extended, specify this.type as the return type of fluent style methods.
+如果类需要被继承，链式调用方法要显式的返回this.type对象 方法的最后返回 this 关键字
+2.If you’re sure that your class won’t be extended, you can optionally return this from your fluent style methods.
+如果类（final class)不需要被继承，可以不返回this.type，方法的最后返回 this 关键字
+ */
 class VerificationRunBuilder(val data: DataFrame) {
 
   protected var requiredAnalyzers: Seq[Analyzer[_, Metric[_]]] = Seq.empty
@@ -48,14 +56,14 @@ class VerificationRunBuilder(val data: DataFrame) {
   protected var statePersister: Option[StatePersister] = None
   protected var stateLoader: Option[StateLoader] = None
 
-  protected def this(verificationRunBuilder: VerificationRunBuilder) {
+  protected def this(verificationRunBuilder: VerificationRunBuilder) { // this表示 方法verificationRunBuilder
     /*
     在类中定义this方法，叫做auxiliary constructors（辅助类构造函数），一般情况下很少用到，还不如在类的形参中直接定义默认参数值
     但是像这种默认参数特别多的情况，使用辅助类构造函数还是挺有用的，比较简洁
     功能就是用来设定默认值
      */
 
-    this(verificationRunBuilder.data)
+    this(verificationRunBuilder.data)  // this 表示类 VerificationRunBuilder，所以入参是.data。这个是辅助类构造函数的语法
 
     requiredAnalyzers = verificationRunBuilder.requiredAnalyzers
 
